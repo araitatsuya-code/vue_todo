@@ -1,12 +1,25 @@
 (function() {
   'use strict';
 
-  // Components
-
   var likeComponent = Vue.extend({
-    template: '<button>Like</button>'
-    // template: '<button>Like</button><button>Like</button>'
-    // template: '<div><button>Like</button><button>Like</button></div>'
+    // props: ['message'],
+    props: {
+      message: {
+        type: String,
+        default: 'Like'
+      }
+    },
+    data: function() {
+      return {
+        count: 0
+      }
+    },
+    template: '<button @click="countUp">{{ message }} {{ count }}</button>',
+    methods: {
+      countUp: function() {
+        this.count++;
+      }
+    }
   });
 
   var app = new Vue({
