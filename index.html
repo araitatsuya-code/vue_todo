@@ -16,16 +16,16 @@
       add
       </button>
       <ul>
-        <li v-for='todo in todos'>
+        <li v-for='(todo,index) in todos'>
           <input type="checkbox" v-model="todo.isDone">
           <span v-bind:class="{ done: todo.isDone }">{{ todo.item }}</span>
-          <button>delete</button>
+          <button v-on:click="deleteItem(index)">delete</button>
         </li>
       </ul>
     </form>
     <pre>{{ $data }}</pre>
   </div>
-  
+    
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="main.js"></script>
 </body>
