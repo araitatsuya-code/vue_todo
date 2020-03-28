@@ -1,22 +1,39 @@
 var app = new Vue({
-  el: '#app',
-  data:{
-    colors:[
-      {name: 'red'},
-      {name: 'green'},
-      {name: 'blue'}
-    ]
-  },
+    el: '#app',
+    data:{
+      items: null,
+      keyword: '',
+      message: ''
+    },
     watch:{
-      colors:{
-        handler: function(newValue, oldValue){
-          console.log('update')
-          console.log('new: %s, oldValue: %s',
-            JSON.stringify(newValue, null ,'\t'),
-            JSON.stringify(oldValue, null ,'\t') )
-        
-      },
-      deep: true
+
+    },
+    created: function() {
+      this.keyword = 'Javascript'
+      this.getAnswer()
+    },
+    methods:{
+      getAnswer: function(){
+        if(this.keyword === ''){
+          this.items = null
+          return
+        }
+
+        this.message = 'Loading...'
+        var vm = this
+        var params = { page: 1, par_page: 20, query: this.keyword }
+        axios.get('https://qiita.com/api/v2/items', { params })
+          .then(function(response){
+            console.log(response)
+            vm.items = response.data
+          })
+          .catch(function(error){
+            vm.message = 'Error' + error
+          })
+          .finally(function(){
+            vm.message = ''
+          })
+      }
+
     }
-  }
- })
+})
