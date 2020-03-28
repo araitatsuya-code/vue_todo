@@ -6,16 +6,23 @@ var app = new Vue({
       message: ''
     },
     watch:{
+      keyword: function(newKeyword, oldKeyword){
+        // console.log(newKeyword)
+        this.message = 'お待ちください'
+        this.debouncedGetAnswer()
+      }
 
     },
     created: function() {
-      this.keyword = 'Javascript'
-      this.getAnswer()
+      // this.keyword = 'Javascript'
+      // this.getAnswer()
+      this.debouncedGetAnswer = _.debounce(this.getAnswer, 1000)
     },
     methods:{
       getAnswer: function(){
         if(this.keyword === ''){
           this.items = null
+          this.message = ''
           return
         }
 
