@@ -8,18 +8,22 @@
 </head>
 <body>
   <div id="app">
-      <h2>
-        mustache
-      </h2>
-      <p>
-          {{ JPYprice | toUSD | numberFormat }}
-      </p>
-      
-      <h2>
-        v-bind
-      </h2>
-      <input type="text" v-bind:value="JPYprice | toUSD | numberFormat">
-    
+    <h2>bircoin price</h2>
+    <section v-if="hasError">
+    error
+    </section>
+    <section v-else>
+      <div v-if="loading">
+      loading..
+      </div>
+      <div>
+        <ul v-cloak>
+          <li v-for="(rate,currency) in bpi">
+            {{ currency }} : {{ rate.rate_float | currencyDecimal }}
+          </li>
+        </ul>
+      </div>
+    </section>
   </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios@0.19.2/dist/axios.min.js"></script>      
